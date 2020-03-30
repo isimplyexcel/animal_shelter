@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Delete volunteer</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if volunteers %}
+            {% for volunteer in volunteers %}
+            <tr>
+                <td>{{ volunteer['first_name'] }}</td>
+                <td>{{ volunteer['last_name'] }}</td>
+                <td>
+                    <form action="/vol_manage/volunteer/delete" method="post">
+                        <input type="text" hidden name="volunteer_id" value="{{ volunteer['volunteer_id'] }}">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <h2>Edit volunteer</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if volunteers %}
+            {% for volunteer in volunteers %}
+            <tr>
+                <td>{{ volunteer['first_name'] }}</td>
+                <td>{{ volunteer['last_name'] }}</td>
+                <td>
+                    <form action="/vol_manage/volunteer/edit" method="post">
+                        <div class="row">
+                            <input type="text" hidden name="volunteer_id" value="{{ volunteer['volunteer_id'] }}">
+                            <div class="col">
+                                <input type="text" class="form-control" name="fname" placeholder="Updated first name">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" name="lname" placeholder="Updated last name">
+                            </div>
+                            <div class="col">
+                                <input type="submit" class="btn btn-danger" value="Edit">
+                            </div>
+                        </div>
+                    </form>
+
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+{% endblock %}

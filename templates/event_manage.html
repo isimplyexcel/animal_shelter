@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Events</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Volunteers</th>
+            <th scope="col">Participating Animals</th>
+            <th></th>
+        </tr>
+        </thead>
+        {% if event_date %}
+        {% for event in event_date %}
+        <tbody>
+            <tr>
+                <td>{{event}}</td>
+                <td>{{event_date[event]}}</td>
+                <td>
+                    {% for vol in event_vols[event] %}
+                    {{vol if vol != None}}
+                    {{"," if not loop.last}}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for animal in event_animals[event] %}
+                    {{animal if animal != None}}
+                    {{"," if not loop.last}}
+                    {% endfor %}
+                </td>
+                <td>
+                    <form action="/event_manage/event/delete" method="post">
+                        <input type="text" hidden name="event_id" value="{{ event_id_dict[event] }}">
+                        <input type="submit" class="btn btn-danger" value="Delete Event">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+    <br>
+
+    <h2>Add Event</h2>
+
+    <form id="addEvent" action="/event_manage/event/add" method="post">
+        <div class="form-group">
+            <label for="eventName">Event Name</label>
+            <input type="text" class="form-control" id="eventName" aria-describedby="eventName" placeholder="Enter the name of your event" name="event_name" required>
+        </div>
+        <div class="form-group">
+            <label for="eventDate">Date</label>
+            <input type="date" class="form-control" id="eventDate" aria-describedby="eventName" name="event_date" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Event</button>
+    </form>
+
+    <br><br>
+
+    <h2>Assign Volunteer to Event</h2>
+
+    <form id="assignVolunteer" action="/event_manage/event/assign_volunteer" method="post">
+        <div class="form-group">
+            <label for="event">Event</label>
+
+            <select class="custom-select custom-select-sm" name="event" required>
+            <option selected></option>
+            {% if event_date %}
+            {% for event in event_date %}
+                <option value="{{ event_id_dict[event] }}">{{ event }}</option>
+            {% endfor %}
+            {% endif %}
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label for="volunteer">Volunteer</label>
+            <select class="custom-select custom-select-sm" name="volunteer" required>
+                <option selected></option>
+            {% if event_volunteers %}
+            {% for volunteer in event_volunteers %}
+                <option value="{{volunteer['volunteer_id']}}">{{volunteer['first_name'] + " " + volunteer['last_name'] }}</option>
+            {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br><br>
+
+    <h2>Un-Assign Volunteer from Event</h2>
+
+    <form action="/event_manage/event/un_assign_volunteer" method="post">
+        <div class="form-group">
+            <label for="volunteer_event">
+                <select class="custom-select custom-select-sm" name="volunteer_event" required>
+                    <option selected></option>
+                    {% if volunteer_event %}
+                    {% for item in volunteer_event %}
+                        <option value="{{ item['volunteer_id'] }},{{ item['event_id'] }}">{{ item['first_name'] + " " + item['last_name'] + " --- " + item['name'] }}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
+    <br><br>
+
+    <h2>Assign Animal to Event</h2>
+
+    <form id="assignAnimal" action="event_manage/event/assign_animal" method="post">
+        <div class="form-group">
+            <label for="event">Event</label>
+            <select class="custom-select custom-select-sm" name="event">
+                <option selected></option>
+            {% if event_date %}
+            {% for event in event_date %}
+                <option value="{{ event_id_dict[event] }}">{{ event }}</option>
+            {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="animal">Animal</label>
+            <select class="custom-select custom-select-sm" name="animal">
+                <option selected></option>
+            {% if animals %}
+            {% for animal in animals %}
+                <option value="{{ animal['animal_id'] }}">{{ animal['name']}} {{type_dict[animal.type]}}</option>
+            {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br><br>
+
+    <h2>Un-Assign Animal from Event</h2>
+
+    <form id="unassignAnimal" action="event_manage/event/un_assign_animal" method="post">
+        <div class="form-group">
+            <label for="animal_event">
+                <select class="custom-select custom-select-sm" name="animal_event" required>
+                    <option selected></option>
+                    {% if animal_event %}
+                    {% for item in animal_event %}
+                        <option value="{{ item['animal_id'] }},{{ item['event_id'] }}">{{ item['animals.name'] + " --- " + item['name'] }}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
+    <br><br>
+
+{% endblock %}

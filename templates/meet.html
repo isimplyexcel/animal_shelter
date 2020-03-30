@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Meet the animals</h2>
+
+    <br>
+
+    <form id="animalType" action="/meet" method="post">
+        <div class="form-group">
+            <label for="type">Filter animals by type</label>
+            <select id="type" class="custom-select custom-select-sm" name="type">
+                <option value="all">All</option>
+                <option value="dogs">Dogs</option>
+                <option value="cats">Cats</option>
+            </select>
+        </div>
+        <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    <br><br><br>
+
+    <ul class="list-group">
+        {% if animals %}
+        {% for animal in animals %}
+
+        <li class="list-group-item">{{animal.name}} {{type_dict[animal.type]}}</li>
+
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+{% endblock %}

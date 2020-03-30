@@ -1,0 +1,8 @@
+#database.py
+.DS_Store
+.idea
+__pycache__
+flask_session
+env
+venv
+.vscode

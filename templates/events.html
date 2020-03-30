@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Events</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Volunteers</th>
+            <th scope="col">Participating Animals</th>
+        </tr>
+        </thead>
+        {% if event_date %}
+        {% for event in event_date %}
+        <tbody>
+            <tr>
+                <td>{{event}}</td>
+                <td>{{event_date[event]}}</td>
+                <td>
+                    {% for vol in event_vols[event] %}
+                    {{vol if vol != None}}
+                    {{"," if not loop.last}}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for animal in event_animals[event] %}
+                    {{animal if animal != None}}
+                    {{"," if not loop.last}}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+{% endblock %}
+
+

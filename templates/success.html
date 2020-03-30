@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Meet our new pet owners!</h2>
+
+    <p>Since 2010 our shelter has helped over 2,000 animals find their fur-ever families.  See some of the happy families below!</p>
+
+    <ul class="list-group">
+    {% if animals %}
+    {% for animal in animals %}
+
+        <li class="list-group-item">{{animal.first_name}} {{animal.last_name}} adopted {{animal.name}}</li>
+
+    {% endfor %}
+    {% endif %}
+    </ul>
+
+{% endblock %}

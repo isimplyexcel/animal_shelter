@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Meet the volunteers</h2>
+
+    <p>Our volunteers help run the Benton County Animal Shelter!</p>
+    {% if volunteers %}
+    {% for volunteer in volunteers %}
+    <ul class="list-group">
+        <li class="list-group-item">{{ volunteer['first_name'] + ' ' + volunteer['last_name'] }}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+
+    <br><br>
+    <h2>Sign up to volunteer!</h2>
+
+    <form id="addVolunteer" action="/volunteers" method="post">
+        <div class="form-group">
+            <label for="volunteerFirstName">First Name</label>
+            <input type="text" class="form-control" id="volunteerFirstName" aria-describedby="firstName" placeholder="Enter your first name" name="fname" required>
+        </div>
+        <div class="form-group">
+            <label for="volunteerLastName">Last Name</label>
+            <input type="text" class="form-control" id="volunteerLastName" aria-describedby="lastName" placeholder="Enter your last name" name="lname" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign Up!</button>
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h2>Finalize adoption</h2>
+
+    <p>A person must be added to the pet owner registry before they can adopt a pet.</p>
+
+    <form id="finalizeAdoption" action="/adopt" method="post">
+        <div class="form-group">
+            <label for="petowner">Pet Owner</label>
+
+            <select class="custom-select custom-select-sm" id="petowner" name="pet_owner_id" required>
+                <option selected></option>
+                {% if petowners %}
+                {% for petowner in petowners %}
+                <option value="{{ petowner['pet_owner_id'] }}">{{ petowner['first_name'] + " " + petowner['last_name'] }}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label for="animal">Animal</label>
+            <select class="custom-select custom-select-sm" id="animal" name="animal_id" required>
+                <option selected></option>
+                {% if animals %}
+                {% for animal in animals %}
+                <option value="{{animal['animal_id']}}">{{animal['name']}} {{type_dict[animal.type]}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+{% endblock %}

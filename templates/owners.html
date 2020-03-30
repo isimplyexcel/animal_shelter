@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h2>Pet owner registry</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if owners %}
+        {% for owner in owners %}
+        <tr>
+            <td>{{ owner['first_name'] }}</td>
+            <td>{{ owner['last_name'] }}</td>
+            <td>
+                <form action="/owners/delete" method="post">
+                    <input type="text" hidden name="pet_owner_id" value="{{ owner['pet_owner_id'] }}">
+                    <input type="submit" class="btn btn-danger" value="Delete Owner">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+
+    <br><br>
+    <h2>Add person to registry</h2>
+
+    <form id="addOwner" action="/owners" method="post">
+        <div class="form-group">
+            <label for="petOwnerFirstName">First Name</label>
+            <input type="text" class="form-control" id="petOwnerFirstName" aria-describedby="firstName" placeholder="Enter first name" name="fname" required>
+        </div>
+        <div class="form-group">
+            <label for="petOwnerLastName">Last Name</label>
+            <input type="text" class="form-control" id="petOwnerLastName" aria-describedby="lastName" placeholder="Enter last name" name="lname" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+{% endblock %}

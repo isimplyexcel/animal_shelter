@@ -1,0 +1,24 @@
+.nav-link {
+    margin-right: 1em !important;
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+.content {
+    margin: 3em auto;
+    padding: 1em;
+    position: relative;
+}
+
+/*Not used yet*/
+.site-text {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+
+
